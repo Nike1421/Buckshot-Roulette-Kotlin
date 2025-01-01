@@ -3,6 +3,7 @@ data class IndexedShell(val position: Int, val shellType: String)
 class Shotgun {
     private val slots = 8
     private var shotgunBarrel = mutableListOf<String>()
+    private var damage = 1
 
     fun addRandomShells(){
         val numberOfShells = (2..slots).random()
@@ -52,6 +53,18 @@ class Shotgun {
 
     fun displayShotsInBarrel(){
         println(shotgunBarrel)
+    }
+
+    fun doubleDamage(){
+        damage = 2
+    }
+
+    fun resetDamage(){
+        damage = 1
+    }
+
+    fun shotgunRoundCount(): Int{
+        return shotgunBarrel.size
     }
 }
 
