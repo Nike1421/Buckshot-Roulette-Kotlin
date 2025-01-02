@@ -1,10 +1,10 @@
 class Player {
-    private var name = ""
+    var name = ""
         set(value) {
             field = value
         }
     var itemsList = mutableListOf<String>()
-    var health = 0
+    var health = 3
     var isHandcuffed = false
 
     fun dealDamage(damage: Int){
@@ -16,7 +16,7 @@ class Player {
     }
 
     fun printInfo(){
-        println("Name: $name, Age: $health")
+        println("Name: $name, Health: $health")
     }
 
 
