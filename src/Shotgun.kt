@@ -48,7 +48,7 @@ class Shotgun {
 
     fun invertLastShellInBarrel(){
         val poppedShell = rackBarrel()
-        shotgunBarrel.add(shotgunBarrel.lastIndex, if (poppedShell == "Blank") "Live" else "Blank")
+        shotgunBarrel.add(shotgunBarrel.lastIndex + 1, if (poppedShell == "Blank") "Live" else "Blank")
     }
 
     fun displayShotsInBarrel(){

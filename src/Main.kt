@@ -34,8 +34,11 @@ class Game {
     }
 
     fun switchCurrentPlayer(){
-        otherPlayer = currentPlayer
-        currentPlayer = if(currentPlayer == playerOne) playerTwo else playerOne
+        if (otherPlayer.isHandcuffed != true){
+            otherPlayer = currentPlayer
+            currentPlayer = if(currentPlayer == playerOne) playerTwo else playerOne
+        }
+        otherPlayer.isHandcuffed = false
     }
 
     fun burnerPhoneAction(){
@@ -71,10 +74,14 @@ class Game {
 
     fun playerUseItems(){
         var itemInput = 0
-        while (itemInput != -1 && currentPlayer.itemsList.size != 0){
+        var currentPlayerItems = if (currentPlayer == playerOne) playerOneItems else playerTwoItems
+        while (currentPlayerItems.size > 0){
             print("Enter the item you want to use or enter -1 to not use any items: ")
             itemInput = readln().toInt()
-            val chosenItem = playerChooseItemsFromItemsList(itemInput)
+            if (itemInput == -1){
+                break
+            }
+            val chosenItem = currentPlayerItems[itemInput]
             when (chosenItem) {
                 "Magnifying Glass" -> magnifyingGlassAction()
                 "Cigarette Pack" -> cigarettePackAction()
@@ -84,11 +91,9 @@ class Game {
                 "Burner Phone" -> burnerPhoneAction()
                 "Inverter" -> inverterAction()
             }
+            currentPlayerItems.removeAt(itemInput)
+            printCurrentPlayerItems()
         }
-    }
-
-    fun playerChooseItemsFromItemsList(itemIndex: Int): String{
-        return currentPlayer.itemsList[itemIndex]
     }
 
     fun handleShot(shotPlayer: Player){
