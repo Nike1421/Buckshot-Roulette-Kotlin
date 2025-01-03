@@ -23,6 +23,10 @@ class Shotgun {
         shotgunBarrel.shuffle()
     }
 
+    fun clearShotgunBarrel(){
+        shotgunBarrel.clear()
+    }
+
     private fun displayUnShuffledBarrel(liveShellCount: Int, blankShellCount: Int){
         println("The Shotgun Barrel Contains $liveShellCount Live and $blankShellCount Blank Shells in a Random Order.")
     }

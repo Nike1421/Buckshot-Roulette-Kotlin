@@ -19,6 +19,8 @@ class Player {
         println("Name: $name, Health: $health")
     }
 
-
+    fun renewHealthBar(healthSet: Int){
+        health = healthSet
+    }
 
 }

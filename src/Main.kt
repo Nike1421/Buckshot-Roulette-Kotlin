@@ -112,6 +112,15 @@ class Game {
         }
         shotgun.resetDamage()
     }
+
+    fun newRoundChecklist(){
+        val randomHealth = (3..5).random()
+        playerOne.renewHealthBar(randomHealth)
+        playerTwo.renewHealthBar(randomHealth)
+        playerOneItems.clear()
+        playerTwoItems.clear()
+        shotgun.clearShotgunBarrel()
+    }
 }
 
 fun initPlayers(game: Game){
@@ -131,22 +140,27 @@ fun main() {
     var userShotChoice = -1
     var shotPlayer: Player
     initPlayers(game = game)
-    game.populatePlayerItems()
-    game.printPlayerItems()
-    game.shotgun.addRandomShells()
-    while (game.currentPlayer.health != 0 && game.otherPlayer.health != 0){
-        println("Turn: ${game.currentPlayer.name}")
-        print("Your Items: ")
-        game.printCurrentPlayerItems()
-        game.playerUseItems()
-        println("You have the shotgun. Enter 1 to shoot yourself or 2 to shoot the opponent.")
-        userShotChoice = readln().toInt()
-        shotPlayer = if (userShotChoice == 1) game.currentPlayer else game.otherPlayer
-        game.handleShot(shotPlayer)
-        game.currentPlayer.printInfo()
-        if (game.shotgun.shotgunRoundCount() == 0){
-            game.shotgun.addRandomShells()
-            game.populatePlayerItems()
+    while (game.currentRoundNumber != 3){
+        println("BuckShot Roulette Round #${game.currentRoundNumber}")
+        game.populatePlayerItems()
+        game.printPlayerItems()
+        game.shotgun.addRandomShells()
+        while (game.currentPlayer.health != 0 && game.otherPlayer.health != 0){
+            println("Turn: ${game.currentPlayer.name}")
+            print("Your Items: ")
+            game.printCurrentPlayerItems()
+            game.playerUseItems()
+            println("You have the shotgun. Enter 1 to shoot yourself or 2 to shoot the opponent.")
+            userShotChoice = readln().toInt()
+            shotPlayer = if (userShotChoice == 1) game.currentPlayer else game.otherPlayer
+            game.handleShot(shotPlayer)
+            game.currentPlayer.printInfo()
+            if (game.shotgun.shotgunRoundCount() == 0){
+                game.shotgun.addRandomShells()
+                game.populatePlayerItems()
+            }
         }
+        game.currentRoundNumber += 1
+        game.newRoundChecklist()
     }
 }
